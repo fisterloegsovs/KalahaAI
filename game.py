@@ -1,6 +1,3 @@
-import os
-import time
-
 board = [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
 current_player = 0
 
