@@ -12,7 +12,13 @@ def print_board(board):
     print(" ")
 
 def is_valid_move(board, player, pit):
-    return board[pit] != 0 and (player == 0 and 0 <= pit <= 5) or (player == 1 and 7 <= pit <= 12)
+    if not ((player == 0 and 0 <= pit <= 5) or (player == 1 and 7 <= pit <= 12)):
+        print("Invalid move. Please choose a valid pit on your side.")
+        return False
+    if board[pit] == 0:
+        print("Warning: You've selected a pit with 0 stones. Please choose a different pit.")
+        return False
+    return True
 
 def is_game_over(board):
     return sum(board[0:6]) == 0 or sum(board[7:13]) == 0
@@ -45,7 +51,9 @@ def capture_opposite(board, player, pit):
             board[6 if player == 0 else 13] += board[opposite_pit] + 1
             board[opposite_pit] = board[pit] = 0
 
-
+def minimax(board, player, depth, alpha, beta):
+  return 0    
+    
 while not is_game_over(board):
     print_board(board)
     pit = -1
@@ -54,9 +62,9 @@ while not is_game_over(board):
             pit_input = input(f"Player {current_player + 1}, choose your pit: ")
             pit = int(pit_input) - 1
             if current_player == 1:
-                pit += 7  # Map Player 2's input to their side of the board
+                pit += 7 
             if not is_valid_move(board, current_player, pit):
-                print("Invalid move. Please choose a valid pit on your side.")
+                continue
             else:
                 break
         except ValueError:
