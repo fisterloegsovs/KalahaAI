@@ -94,13 +94,15 @@ def minimax(board, player, depth, alpha, beta):
 
 def get_ai_move(board, player, depth=5):
     best_move = -1
-    best_eval = float('-inf') if player == PLAYER_ONE else float('inf')
+    alpha = float('-inf')
+    beta = float('inf')
+    best_eval = alpha if player == PLAYER_ONE else beta
     for pit in PLAYER_ONE_PITS if player == PLAYER_ONE else PLAYER_TWO_PITS:
         if board[pit] > 0:
             new_board = board[:]
             last_pit = make_move(new_board, player, pit)
             capture_opposite(new_board, player, last_pit)
-            eval = minimax(new_board, 1 - player, depth - 1, float('-inf'), float('inf'))
+            eval = minimax(new_board, 1 - player, depth - 1, alpha, beta)
             if player == PLAYER_ONE and eval > best_eval or player == PLAYER_TWO and eval < best_eval:
                 best_eval = eval
                 best_move = pit
